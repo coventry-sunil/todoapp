@@ -9,6 +9,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  String text = "simple text";
+
+  void changeText({required String todoText}) {
+    setState(() {
+      text = '$todoText';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +33,13 @@ class _MainScreenState extends State<MainScreen> {
                   //backgroundColor: const Color.fromARGB(255, 240, 240, 241),
                   context: context,
                   builder: (context) {
-                    return Container(
-                      padding: EdgeInsets.all(20),
-                      height: 250,
-                      child: AddTodo(),
+                    return Padding(
+                      padding: MediaQuery.of(context).viewInsets,
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        height: 250,
+                        child: AddTodo(changeText: changeText),
+                      ),
                     );
                   });
             },
@@ -39,7 +50,9 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      //  body: AddTodo(),
+      body: Container(
+        child: Text('$text'),
+      ),
     );
   }
 }
