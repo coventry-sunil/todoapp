@@ -1,4 +1,3 @@
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -19,9 +18,21 @@ class _MainScreenState extends State<MainScreen> {
           centerTitle: true,
           title: Text("Todo App"),
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(Icons.add),
+            InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                    //backgroundColor: const Color.fromARGB(255, 240, 240, 241),
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        height: 250,
+                      );
+                    });
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.add),
+              ),
             ),
           ],
         ));
