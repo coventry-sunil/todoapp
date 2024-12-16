@@ -9,14 +9,16 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  String text = "simple text";
+  //String text = "simple text";
 
-  List<String> listText = ["apple", "banana", "orange"];
+  List<String> todoList = ["apple", "banana", "orange"];
 
-  void changeText({required String todoText}) {
+  void addTodo({required String todoText}) {
     setState(() {
       //text = '$todoText';
+      todoList.insert(0, todoText);
     });
+    Navigator.pop(context);
   }
 
   @override
@@ -40,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
                         child: Container(
                           padding: EdgeInsets.all(20),
                           height: 250,
-                          child: AddTodo(changeText: changeText),
+                          child: AddTodo(addTodo: addTodo),
                         ),
                       );
                     });
@@ -57,14 +59,30 @@ class _MainScreenState extends State<MainScreen> {
             //   child: Text('$text'),
             // ),
             ListView.builder(
-                itemCount: listText.length,
+                itemCount: todoList.length,
                 itemBuilder: (BuildContext context, int index) {
                   //return Text(listText[index]);
                   return ListTile(
-                    onTap: () {},
-                    title: Text(listText[index]),
-                    trailing: Icon(Icons.access_alarm_rounded),
-                    leading: Icon(Icons.arrow_back_ios),
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                              padding: EdgeInsets.all(20),
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      todoList.removeAt(index);
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Mark as Done')),
+                            );
+                          });
+                    },
+                    title: Text(todoList[index]),
+                    //trailing: Icon(Icons.access_alarm_rounded),
+                    //leading: Icon(Icons.arrow_back_ios),
                   );
                 }));
   }
