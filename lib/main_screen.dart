@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/add_todo.dart';
+import 'package:todoapp/widgets/todo_list.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -60,6 +61,22 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
   }
 
+  void showAddTodoBottomSheet() {
+    showModalBottomSheet(
+        //backgroundColor: const Color.fromARGB(255, 240, 240, 241),
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Container(
+              padding: EdgeInsets.all(20),
+              height: 250,
+              child: AddTodo(addTodo: addTodo),
+            ),
+          );
+        });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: Drawer(
@@ -70,21 +87,7 @@ class _MainScreenState extends State<MainScreen> {
           title: Text("Todo App"),
           actions: [
             InkWell(
-              onTap: () {
-                showModalBottomSheet(
-                    //backgroundColor: const Color.fromARGB(255, 240, 240, 241),
-                    context: context,
-                    builder: (context) {
-                      return Padding(
-                        padding: MediaQuery.of(context).viewInsets,
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          height: 250,
-                          child: AddTodo(addTodo: addTodo),
-                        ),
-                      );
-                    });
-              },
+              onTap: showAddTodoBottomSheet,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(Icons.add),
@@ -96,33 +99,7 @@ class _MainScreenState extends State<MainScreen> {
             // Container(
             //   child: Text('$text'),
             // ),
-            ListView.builder(
-                itemCount: todoList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  //return Text(listText[index]);
-                  return ListTile(
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Container(
-                              padding: EdgeInsets.all(20),
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      todoList.removeAt(index);
-                                    });
-                                    updateLocalData();
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text('Mark as Done')),
-                            );
-                          });
-                    },
-                    title: Text(todoList[index]),
-                    //trailing: Icon(Icons.access_alarm_rounded),
-                    //leading: Icon(Icons.arrow_back_ios),
-                  );
-                }));
+            TodoListBuilder(
+                todoList: todoList, updateLocalData: updateLocalData));
   }
 }
