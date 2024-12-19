@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/add_todo.dart';
 import 'package:todoapp/widgets/todo_list.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -77,10 +78,44 @@ class _MainScreenState extends State<MainScreen> {
         });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: Drawer(
-          child: Text("Drawer Data"),
+          child: Column(
+            children: [
+              Container(
+                color: Colors.blueGrey[900],
+                height: 100,
+                width: double.infinity,
+                child: Center(
+                  child: Text(
+                    "TODO APP",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              ListTile(
+                onTap: () {
+                  launchUrl(Uri.parse("https://suneel.com.np"));
+                },
+                leading: Icon(Icons.person),
+                title: Text('About Me',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              ListTile(
+                onTap: () {
+                  launchUrl(Uri.parse("mailto:shrestha@suneel.com.np"));
+                },
+                leading: Icon(Icons.email_rounded),
+                title: Text(
+                  'Contact Me',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
         ),
         appBar: AppBar(
           centerTitle: true,

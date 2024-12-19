@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TodoListBuilder extends StatefulWidget {
-  List<String> todoList;
-  void Function() updateLocalData;
-  TodoListBuilder(
+  final List<String> todoList;
+  final void Function() updateLocalData;
+  const TodoListBuilder(
       {super.key, required this.todoList, required this.updateLocalData});
 
   @override
@@ -16,6 +16,8 @@ class _TodoListBuilderState extends State<TodoListBuilder> {
         context: context,
         builder: (context) => Container(
               padding: EdgeInsets.all(20),
+              width: double.infinity,
+              height: 150,
               child: ElevatedButton(
                   onPressed: () {
                     setState(() {

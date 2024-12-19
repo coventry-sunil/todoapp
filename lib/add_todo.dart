@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AddTodo extends StatefulWidget {
-  void Function({required String todoText}) addTodo;
-  AddTodo({super.key, required this.addTodo});
+  final void Function({required String todoText}) addTodo;
+  const AddTodo({super.key, required this.addTodo});
 
   @override
   State<AddTodo> createState() => _AddTodoState();
