@@ -16,6 +16,25 @@ class _MainScreenState extends State<MainScreen> {
   List<String>? savedList;
 
   void addTodo({required String todoText}) {
+    if (todoList.contains(todoText)) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Already Exits!"),
+              content: Text("This todo data already exists!"),
+              actions: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Close'),
+                )
+              ],
+            );
+          });
+      return;
+    }
     setState(() {
       //text = '$todoText';
       todoList.insert(0, todoText);
