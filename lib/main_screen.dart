@@ -15,7 +15,6 @@ class _MainScreenState extends State<MainScreen> {
   //String text = "simple text";
 
   List<String> todoList = [];
-  List<String>? savedList;
 
   void addTodo({required String todoText}) {
     if (todoList.contains(todoText)) {
@@ -81,6 +80,16 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.blueGrey[900],
+            shape: CircleBorder(),
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              showAddTodoBottomSheet();
+            }),
         drawer: Drawer(
           child: Column(
             children: [
@@ -120,15 +129,15 @@ class _MainScreenState extends State<MainScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: Text("Todo App"),
-          actions: [
-            InkWell(
-              onTap: showAddTodoBottomSheet,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(Icons.add),
-              ),
-            ),
-          ],
+          // actions: [
+          //   InkWell(
+          //     onTap: showAddTodoBottomSheet,
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(8.0),
+          //       child: Icon(Icons.add),
+          //     ),
+          //   ),
+          // ],
         ),
         body:
             // Container(
