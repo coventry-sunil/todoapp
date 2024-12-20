@@ -38,13 +38,44 @@ class _TodoListBuilderState extends State<TodoListBuilder> {
             itemCount: widget.todoList.length,
             itemBuilder: (BuildContext context, int index) {
               //return Text(listText[index]);
-              return ListTile(
-                onTap: () {
-                  onItemClicked(index: index);
+              return Dismissible(
+                key: UniqueKey(),
+                direction: DismissDirection.startToEnd,
+                // secondaryBackground: Container(color: Colors.red[300]),
+                // child: Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Padding(
+                //       padding: const EdgeInsets.all(8.0),
+                //       child: Icon(Icons.delete),
+                //     ),
+                //   ],
+                // ),
+                background: Container(
+                  color: Colors.green[300],
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.check),
+                      ),
+                    ],
+                  ),
+                ),
+                onDismissed: (direction) {
+                  setState(() {
+                    widget.todoList.removeAt(index);
+                  });
+                  widget.updateLocalData();
                 },
-                title: Text(widget.todoList[index]),
-                //trailing: Icon(Icons.access_alarm_rounded),
-                //leading: Icon(Icons.arrow_back_ios),
+                child: ListTile(
+                  onTap: () {
+                    onItemClicked(index: index);
+                  },
+                  title: Text(widget.todoList[index]),
+                  //trailing: Icon(Icons.access_alarm_rounded),
+                  //leading: Icon(Icons.arrow_back_ios),
+                ),
               );
             });
   }
